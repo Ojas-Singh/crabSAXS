@@ -1,0 +1,11 @@
+HEADER    crabSAXS deterministic parser fixture
+MODEL        1
+ATOM      1  CA  ALA A   1       0.000   0.000   0.000  0.50 10.00           C
+ATOM      2  CA AALA A   1       0.100   0.000   0.000  0.80 10.00           C
+ATOM      3  N   ALA A   1       1.330   0.000   0.000  1.00 10.00           N
+HETATM    4  O   HOH A   2       2.000   0.000   0.000  1.00 10.00           O
+ENDMDL
+MODEL        2
+ATOM      5  C   GLY A   1       9.000   0.000   0.000  1.00 10.00           C
+ENDMDL
+END

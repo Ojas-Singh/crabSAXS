@@ -1,0 +1,4 @@
+HEADER    crabSAXS two atom scattering fixture
+ATOM      1  C1  TST A   1       0.000   0.000   0.000  1.00 10.00           C
+ATOM      2  C2  TST A   1       2.000   0.000   0.000  1.00 10.00           C
+END

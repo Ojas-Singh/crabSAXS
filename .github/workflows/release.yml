@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '0.1.*'
+
+permissions:
+  contents: write
+
+jobs:
+  binaries:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            archive: tar.gz
+          - os: macos-13
+            target: x86_64-apple-darwin
+            archive: tar.gz
+          - os: macos-14
+            target: aarch64-apple-darwin
+            archive: tar.gz
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            archive: zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.97.0
+          targets: ${{ matrix.target }}
+      - run: cargo build --release --locked --target ${{ matrix.target }}
+      - name: Package Unix archive
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          mkdir -p package/crabsaxs-${{ github.ref_name }}-${{ matrix.target }}
+          cp target/${{ matrix.target }}/release/crabsaxs package/crabsaxs-${{ github.ref_name }}-${{ matrix.target }}/
+          cp README.md LICENSE CHANGELOG.md package/crabsaxs-${{ github.ref_name }}-${{ matrix.target }}/
+          tar -C package -czf crabsaxs-${{ github.ref_name }}-${{ matrix.target }}.tar.gz crabsaxs-${{ github.ref_name }}-${{ matrix.target }}
+          shasum -a 256 crabsaxs-${{ github.ref_name }}-${{ matrix.target }}.tar.gz > crabsaxs-${{ github.ref_name }}-${{ matrix.target }}.sha256
+      - name: Package Windows archive
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force package/crabsaxs-${{ github.ref_name }}-${{ matrix.target }} | Out-Null
+          Copy-Item target/${{ matrix.target }}/release/crabsaxs.exe package/crabsaxs-${{ github.ref_name }}-${{ matrix.target }}/
+          Copy-Item README.md,LICENSE,CHANGELOG.md package/crabsaxs-${{ github.ref_name }}-${{ matrix.target }}/
+          Compress-Archive -Path package/crabsaxs-${{ github.ref_name }}-${{ matrix.target }} -DestinationPath crabsaxs-${{ github.ref_name }}-${{ matrix.target }}.zip
+          (Get-FileHash crabsaxs-${{ github.ref_name }}-${{ matrix.target }}.zip -Algorithm SHA256).Hash.ToLower() + "  crabsaxs-${{ github.ref_name }}-${{ matrix.target }}.zip" | Out-File -Encoding ascii crabsaxs-${{ github.ref_name }}-${{ matrix.target }}.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: crabsaxs-${{ matrix.target }}
+          path: |
+            crabsaxs-${{ github.ref_name }}-${{ matrix.target }}.*
+
+  publish:
+    needs: binaries
+    runs-on: ubuntu-latest
+    if: ${{ secrets.CARGO_REGISTRY_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.97.0
+      - run: cargo publish --locked --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+  github-release:
+    needs: binaries
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" artifacts/* \
+            --title "CrabSAXS ${{ github.ref_name }}" \
+            --generate-notes

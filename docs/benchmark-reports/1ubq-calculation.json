@@ -1,0 +1,113 @@
+{
+  "report_schema": "crabsaxs-pepsi-parity-v3",
+  "host_arch": "aarch64",
+  "host_os": "macos",
+  "rust_version": "rustc 1.97.0 (2d8144b78 2026-07-07)",
+  "build_profile": "release",
+  "thread_count": 6,
+  "pepsi_bin": "./Pepsi-SAXS",
+  "pepsi_sha256": "775881ee82fa6a4f5eb7c10e3a1a7354f9a6138e0a71756ec42b722156991ead",
+  "pepsi_file_description": "Mach-O 64-bit executable x86_64",
+  "pepsi_execution_mode": "Rosetta 2 translation (x86_64 executable on aarch64 macOS)",
+  "crab_bin": "/Users/healer/Documents/GitHub/crabSAXS/target/release/saxs-rs",
+  "crab_sha256": "8bbf4c5806a500f2784df87dbe09e89254339f3fa7983688c83dea10357f9b46",
+  "crab_file_description": "Mach-O 64-bit executable arm64",
+  "pdb": "examples/data/benchmarks/1ubq.pdb",
+  "pdb_sha256": "d4a6812d8951cf6594e6a0763f089e35f5a80b62acb3c117b2c5565228a7b161",
+  "experimental_sha256": null,
+  "atom_count": 602,
+  "include_non_water_hetatm": true,
+  "occupancy_policy": "selected_conformer_full",
+  "background": "fit",
+  "q_sampling_stride": 20,
+  "hydration_spacing_angstrom": 8.0,
+  "pepsi_hydration_points": 39,
+  "crab_hydration_points": 29,
+  "pepsi_fit_radius_angstrom": null,
+  "pepsi_hydration_contrast_e_per_a3": null,
+  "crab_fit_radius_angstrom": null,
+  "crab_hydration_contrast_e_per_a3": null,
+  "component_parity": {
+    "atomic": {
+      "fitted_scale": 5.8421891085390775e-9,
+      "normalized_nrmse": 0.0062510071127677615,
+      "relative_l2_rmse": 0.014436700571364425
+    },
+    "excluded_volume": {
+      "fitted_scale": 5.866828613741895e-9,
+      "normalized_nrmse": 0.0059759009691942155,
+      "relative_l2_rmse": 0.0137712722130837
+    },
+    "hydration": {
+      "fitted_scale": 9.692347183286724e-12,
+      "normalized_nrmse": 0.008107409176270317,
+      "relative_l2_rmse": 0.023372259814081493
+    },
+    "atomic_excluded_cross": {
+      "fitted_scale": -1.170902758463488e-8,
+      "normalized_nrmse": 0.006113539795447387,
+      "relative_l2_rmse": 0.014101573207764012
+    },
+    "atomic_hydration_cross": {
+      "fitted_scale": 4.76878637456287e-10,
+      "normalized_nrmse": 0.0072305449803349645,
+      "relative_l2_rmse": 0.02047977571018861
+    },
+    "excluded_hydration_cross": {
+      "fitted_scale": -4.775744463959605e-10,
+      "normalized_nrmse": 0.0075306335218097015,
+      "relative_l2_rmse": 0.021361296667024323
+    }
+  },
+  "component_skip_reason": null,
+  "pepsi_arguments": [
+    "examples/data/benchmarks/1ubq.pdb",
+    "-o",
+    "/var/folders/kc/rrpkh8xs2jz_q_k092lpbxn00000gn/T/saxs-compare-GMZ9tF/pepsi.out",
+    "--noSmearing",
+    "-fast"
+  ],
+  "crab_arguments": [
+    "compute",
+    "--pdb",
+    "examples/data/benchmarks/1ubq.pdb",
+    "--method",
+    "multipole",
+    "--qmin",
+    "0",
+    "--qmax",
+    "0.5",
+    "--qstep",
+    "0.005",
+    "--output",
+    "/var/folders/kc/rrpkh8xs2jz_q_k092lpbxn00000gn/T/saxs-compare-GMZ9tF/crab.out",
+    "--include-hetatm",
+    "--occupancy",
+    "full"
+  ],
+  "q_points": 101,
+  "q_min": 0.0,
+  "q_max": 0.5,
+  "comparison_scale": 5.842189108539077e-9,
+  "normalized_nrmse": 0.0062510071127677745,
+  "relative_l2_rmse": 0.014436700571364454,
+  "mean_absolute_relative_error": 0.03639356531987498,
+  "max_relative_error": 0.1403041540823393,
+  "max_relative_error_q": 0.32,
+  "pepsi_median_ms": 41.451833,
+  "pepsi_mad_ms": 6.123207999999998,
+  "crab_median_ms": 13.104417,
+  "crab_mad_ms": 0.5592919999999992,
+  "pepsi_chi2": null,
+  "crab_chi2": null,
+  "crab_fit_params": null,
+  "pepsi_over_crab_speedup": 3.163195508812029,
+  "accuracy_gate_passed": true,
+  "fit_quality_gate_passed": true,
+  "speed_gate_passed": true,
+  "component_gate_passed": true,
+  "target_gate_passed": true,
+  "repetitions": 10,
+  "warmups": 2,
+  "timing_methodology": "Both executables timed as end-to-end subprocesses, including process startup, structure/data parsing, calculation or fit, and curve writing"
+}

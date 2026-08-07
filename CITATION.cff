@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: CrabSAXS
+version: 0.1.0
+message: "If you use CrabSAXS, please cite the software and the methods listed in docs/REFERENCES.md."
+type: software
+authors:
+  - family-names: Singh
+    given-names: Ojas
+    affiliation: Independent
+repository-code: https://github.com/Ojas-Singh/crabSAXS
+license: MIT
+date-released: 2026-08-08

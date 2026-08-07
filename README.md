@@ -1,5 +1,13 @@
 # CrabSAXS
 
+[![crates.io](https://img.shields.io/crates/v/crabsaxs.svg?logo=rust)](https://crates.io/crates/crabsaxs)
+[![docs.rs](https://img.shields.io/docsrs/crabsaxs/latest?logo=docs.rs)](https://docs.rs/crabsaxs)
+[![CI](https://github.com/Ojas-Singh/crabSAXS/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Ojas-Singh/crabSAXS/actions/workflows/ci.yml)
+[![License](https://img.shields.io/crates/l/crabsaxs.svg)](LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/Ojas-Singh/crabSAXS?display_name=tag)](https://github.com/Ojas-Singh/crabSAXS/releases)
+
+![CrabSAXS banner](docs/crabSAXS_banner.png)
+
 CrabSAXS is an independent Rust implementation of theoretical small-angle
 X-ray scattering (SAXS) calculations, experimental fitting, and ensemble
 population scoring from PDB/mmCIF atomic structures. The Debye calculation is

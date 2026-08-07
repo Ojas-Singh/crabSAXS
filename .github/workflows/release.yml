@@ -71,6 +71,7 @@ jobs:
     needs: binaries
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
@@ -80,5 +81,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "$RELEASE_TAG" artifacts/* \
+            --repo Ojas-Singh/crabSAXS \
             --title "CrabSAXS $RELEASE_TAG" \
             --generate-notes

@@ -77,6 +77,38 @@ let result = fitter.fit(&structure, &experimental)?;
 `ProfileCalculator`, `SaxsScorer`, and `EnsembleFitter` provide reusable
 calculation boundaries for Rust applications such as ReGlyco.
 
+### Analysis, reweighting, and plots
+
+The analysis layer exposes self-contained Guinier and indirect-Fourier
+diagnostics through `analyze_experimental`, coordinate Rg/Dmax/P(r) through
+`coordinate_features`, and fit metrics through `features_from_fit`. GNOM and
+AUTORG text can optionally be imported with `parse_gnom_output` or
+`parse_autorg_output` and overlaid with `merge_external_analysis`.
+
+```rust,no_run
+use crabsaxs::{
+    analyze_experimental, coordinate_features, ExperimentalCurve, MaximumEntropyOptions,
+    PrOptions, Structure,
+};
+
+# let structure = Structure::default();
+# let experimental = ExperimentalCurve::default();
+let experimental_analysis = analyze_experimental(&experimental, PrOptions::default());
+let coordinate = coordinate_features(&structure, PrOptions::default())?;
+// Fit a calculated curve with fit_calculated_curve, or reweight conformer
+// curves with reweight_curves and a uniform prior by default.
+let _ = (experimental_analysis, coordinate, MaximumEntropyOptions::default());
+# Ok::<(), crabsaxs::SaxsError>(())
+```
+
+`reweight_curves` minimizes χ² plus a KL penalty to the supplied prior on the
+simplex and reports weights, KL divergence, effective sample size, and the
+fitted curve. `rank_and_marginalize` keeps χ²-derived likelihoods separate from
+normalized multi-feature rank aggregation and returns site-wise marginals for
+candidate combinations. `DiagnosticPlot::save_svg` and `save_png` produce a
+publication-style 2×2 figure with log-log and semilog intensities, error bars,
+Kratky, and experimental/model P(r) panels.
+
 ## Validation and development
 
 ```sh

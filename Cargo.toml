@@ -1,6 +1,6 @@
 [package]
 name = "crabsaxs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Fast, reproducible SAXS calculation and fitting for atomic structures"
 license = "MIT"
